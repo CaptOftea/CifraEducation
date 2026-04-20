@@ -1,4 +1,4 @@
-﻿namespace Task.CSharpBase;
+﻿namespace Task1A;
 
 class Program
 {

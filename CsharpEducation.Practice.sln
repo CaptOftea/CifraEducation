@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task.CSharpBase", "Task.CSharpBase\Task.CSharpBase.csproj", "{DB328274-EC30-4FE8-ACA9-C286AFFF4011}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task1A", "Task1A\Task1A.csproj", "{DB328274-EC30-4FE8-ACA9-C286AFFF4011}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Task1.CSharpBase", "Task1.CSharpBase", "{F9CD9820-AB4E-4380-A4DC-5B24B2BFEF1C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +14,8 @@ Global
 		{DB328274-EC30-4FE8-ACA9-C286AFFF4011}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB328274-EC30-4FE8-ACA9-C286AFFF4011}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB328274-EC30-4FE8-ACA9-C286AFFF4011}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DB328274-EC30-4FE8-ACA9-C286AFFF4011} = {F9CD9820-AB4E-4380-A4DC-5B24B2BFEF1C}
 	EndGlobalSection
 EndGlobal
