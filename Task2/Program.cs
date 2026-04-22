@@ -75,5 +75,11 @@ class Program
         Console.WriteLine ("Ваша первая любимая цитата: '{0}' -прекрасна!, но вот вторая '{1}'-немного противоречива", quote, quote2);
 
         
+        // Задание 5.
+
+        double rad = 5.5;
+        double area = Math.PI * Math.Pow(rad,2);
+        
+        Console.WriteLine("Площадь окружности с радиусом равным: {0}, равна {1}", rad, area);
     }
 }
