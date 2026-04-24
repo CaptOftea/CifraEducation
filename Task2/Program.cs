@@ -81,5 +81,44 @@ class Program
         double area = Math.PI * Math.Pow(rad,2);
         
         Console.WriteLine("Площадь окружности с радиусом равным: {0}, равна {1}", rad, area);
+
+        Hipp newProgram = new Hipp();
+        newProgram.Calculate();
+    }
+}
+
+/// <summary>
+/// Программа для рассчета гипотенузы
+/// </summary>
+public class Hipp
+{
+    public void Calculate()
+    {
+        Console.WriteLine("Введите первый катет");
+        double leg1 = double.Parse(Console.ReadLine());
+        Console.WriteLine("Введите второй катет");
+        double leg2 = double.Parse(Console.ReadLine());
+        Console.WriteLine("Введите гипотенузу");
+        double hypo = double.Parse(Console.ReadLine());
+
+        if (leg1 > 0 && leg2 == 0 && hypo > 0)
+        {
+            leg2 = Math.Sqrt(Math.Pow(hypo, 2) - Math.Pow(leg1, 2));
+            Console.WriteLine("Второй катет = {0}", leg2);
+        }
+        else if (leg1 == 0 && leg2 > 0 && hypo > 0)
+        {
+            leg1 = Math.Sqrt(Math.Pow(hypo, 2) - Math.Pow(leg2, 2));
+            Console.WriteLine("Первый катет = {0}", leg1);
+        }
+        else if (leg1 == 0 && leg2 == 0 && hypo == 0)
+        {
+            hypo = Math.Sqrt(Math.Pow(leg1, 2) * Math.Pow(leg2, 2));
+            Console.WriteLine("Гипотенуза = {0}", hypo);
+        }
+        else
+        {
+            Console.WriteLine("Данные не действительны");
+        }
     }
 }
