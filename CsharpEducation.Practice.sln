@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task1A", "Task1A\Task1A.csproj", "{DB328274-EC30-4FE8-ACA9-C286AFFF4011}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Task1.CSharpBase", "Task1.CSharpBase", "{F9CD9820-AB4E-4380-A4DC-5B24B2BFEF1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task1B", "Task1B\Task1B.csproj", "{C397C8F1-6A4C-40AA-8473-12A514C0EB9F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task2", "Task2\Task2.csproj", "{32E7D09C-3D78-49DB-BCF0-66CADB284223}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DB328274-EC30-4FE8-ACA9-C286AFFF4011}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB328274-EC30-4FE8-ACA9-C286AFFF4011}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB328274-EC30-4FE8-ACA9-C286AFFF4011}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB328274-EC30-4FE8-ACA9-C286AFFF4011}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C397C8F1-6A4C-40AA-8473-12A514C0EB9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C397C8F1-6A4C-40AA-8473-12A514C0EB9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C397C8F1-6A4C-40AA-8473-12A514C0EB9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C397C8F1-6A4C-40AA-8473-12A514C0EB9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32E7D09C-3D78-49DB-BCF0-66CADB284223}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32E7D09C-3D78-49DB-BCF0-66CADB284223}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32E7D09C-3D78-49DB-BCF0-66CADB284223}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32E7D09C-3D78-49DB-BCF0-66CADB284223}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DB328274-EC30-4FE8-ACA9-C286AFFF4011} = {F9CD9820-AB4E-4380-A4DC-5B24B2BFEF1C}
+		{C397C8F1-6A4C-40AA-8473-12A514C0EB9F} = {F9CD9820-AB4E-4380-A4DC-5B24B2BFEF1C}
+		{32E7D09C-3D78-49DB-BCF0-66CADB284223} = {F9CD9820-AB4E-4380-A4DC-5B24B2BFEF1C}
+	EndGlobalSection
+EndGlobal
