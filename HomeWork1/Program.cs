@@ -15,6 +15,21 @@
                 }
             }
             
+            
+            Print(matrix);
+            Turn(matrix);
+            Print(matrix);
+            Turn(matrix);
+            Print(matrix);
+            Turn(matrix);
+            Print(matrix);
+            Turn(matrix);
+            Print(matrix);
+            Turn(matrix);
+            Print(matrix);
+            Turn(matrix);
+            Print(matrix);
+            Turn(matrix);
             Print(matrix);
             Turn(matrix);
         }
@@ -49,13 +64,13 @@
             switch (z) // выбор позиции
             {
                 case 1:
-                    EmptyCheck(matrix, 0, 0, " X");
+                    EmptyCheck(matrix, 2, 0, " X");
                     break;
                 case 2:
-                    EmptyCheck(matrix, 0, 1, " X");
+                    EmptyCheck(matrix, 2, 1, " X");
                     break;
                 case 3:
-                    EmptyCheck(matrix, 0, 2, " X");
+                    EmptyCheck(matrix, 2, 2, " X");
                     break;
                 case 4:
                     EmptyCheck(matrix, 1, 0, " X");;
@@ -67,13 +82,13 @@
                     EmptyCheck(matrix, 1, 2, " X");;
                     break;
                 case 7:
-                    EmptyCheck(matrix, 2, 0, " X");;
+                    EmptyCheck(matrix, 0, 0, " X");;
                     break;
                 case 8:
-                    EmptyCheck(matrix, 2, 1, " X");;
+                    EmptyCheck(matrix, 0, 1, " X");;
                     break;
                 case 9:
-                    EmptyCheck(matrix, 2, 2, " X");;
+                    EmptyCheck(matrix, 0, 2, " X");;
                     break;
             }
         }
@@ -90,15 +105,43 @@
             if (matrix[a, b] == "[ ]")
             {
                 matrix[a, b] = value;
-                return true;
             }
             else
             {
                 Console.WriteLine("Клетка уже занята, выберите другую");
-                return false
             }
         }
-        
+
+        /// <summary>
+        /// Проверка условия победы
+        /// </summary>
+        /// <param name="matrix"></param>
+        static void VinCheck(string[,] matrix)
+        {
+            if (matrix[0, 0] == " X" && matrix[0, 1] == " X" && matrix[0, 2] == " X" ||
+                matrix[1, 0] == " X" && matrix[1, 1] == " X" && matrix[1, 2] == " X" ||
+                matrix[2, 0] == " X" && matrix[2, 1] == " X" && matrix[2, 2] == " X" ||
+                
+                matrix[0, 0] == " X" && matrix[1, 0] == " X" && matrix[2, 0] == " X" ||
+                matrix[0, 1] == " X" && matrix[1, 1] == " X" && matrix[2, 1] == " X" ||
+                matrix[0, 2] == " X" && matrix[1, 2] == " X" && matrix[2, 2] == " X" ||
+                
+                matrix[0, 0] == " X" && matrix[1, 1] == " X" && matrix[2, 2] == " X" ||
+                matrix[2, 0] == " X" && matrix[2, 1] == " X" && matrix[0, 2] == " X" ||)
+                Console.WriteLine("Первый игрок - победил");
+            else if (matrix[0, 0] == " O" && matrix[0, 1] == " O" && matrix[0, 2] == " O" ||
+                  matrix[1, 0] == " O" && matrix[1, 1] == " O" && matrix[1, 2] == " O" ||
+                  matrix[2, 0] == " O" && matrix[2, 1] == " O" && matrix[2, 2] == " O" ||
+                
+                  matrix[0, 0] == " O" && matrix[1, 0] == " O" && matrix[2, 0] == " O" ||
+                  matrix[0, 1] == " O" && matrix[1, 1] == " O" && matrix[2, 1] == " O" ||
+                  matrix[0, 2] == " O" && matrix[1, 2] == " O" && matrix[2, 2] == " O" ||
+                
+                  matrix[0, 0] == " O" && matrix[1, 1] == " O" && matrix[2, 2] == " O" ||
+                  matrix[2, 0] == " O" && matrix[2, 1] == " O" && matrix[0, 2] == " O" ||)
+            Console.WriteLine("Второй игрок - победил");
+            else Console.WriteLine("Ничья");
+        }
         
     }
 }
