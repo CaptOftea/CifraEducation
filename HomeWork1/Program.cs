@@ -4,125 +4,101 @@
     {
         static void Main()
         {
-            string[,] Matrix = new string[3, 3];
+            //создание матрицы
+            string[,] matrix = new string[3, 3];
+            // заполнение матрицы
+            for (int i = 0; i < 3; i++) // внешний цикл (строки)
+            {
+                for (int j = 0; j < 3; j++) // внутренний цикл (столбцы)
+                {
+                    matrix[i, j] = ("[ ]");
+                }
+            }
+            
+            Print(matrix);
+            Turn(matrix);
+        }
 
-            for (int i = 0; i < 3; i++)
+        /// <summary>
+        /// Вывод матрицы в консоль
+        /// </summary>
+        /// <param name="matrix"></param>
+        static void Print(string[,] matrix)
+        {
+            // вывод матрицы
+            for (int i = 0; i < 3; i++) 
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    Matrix[i, j] = ("[ ]");
+                    Console.Write(matrix[i, j] + "\t"); // печать значений ячейки и табуляции
                 }
-            }
-
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    Console.Write(Matrix[i, j] + "\t");
-                }
-                Console.WriteLine();
-            }
-
-            Console.WriteLine("Your turn to chose position");
-
-
-            string inputPosition = Console.ReadLine();
-            int z = int.Parse(inputPosition);
-
-            switch (z)
-            {
-                case 1:
-                    Matrix[0, 0] = " X";
-                    break;
-                case 2:
-                    Matrix[0, 1] = " X";
-                    break;
-                case 3:
-                    Matrix[0, 2] = " X";
-                    break;
-                case 4:
-                    Matrix[1, 0] = " X";
-                    break;
-                case 5:
-                    Matrix[1, 1] = " X";
-                    break;
-                case 6:
-                    Matrix[1, 2] = " X";
-                    break;
-                case 7:
-                    Matrix[2, 0] = " X";
-                    break;
-                case 8:
-                    Matrix[2, 1] = " X";
-                    break;
-                case 9:
-                    Matrix[2, 2] = " X";
-                    break;
-            }
-
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    Console.Write(Matrix[i, j] + "\t");
-                }
-                Console.WriteLine();
-            }
-
-
-            Console.WriteLine("Your turn to chose position");
-
-
-            string inputPosition1 = Console.ReadLine();
-            int z1 = int.Parse(inputPosition1);
-
-            switch (z1)
-            {
-                case 1:
-                    if (Matrix[0, 0] == "[ ]")
-                    {
-                        Matrix[0, 0] = " O";
-                        break;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Позиция занята");
-                        break;
-                    }
-                case 2:
-                    Matrix[0, 1] = " O";
-                    break;
-                case 3:
-                    Matrix[0, 2] = " O";
-                    break;
-                case 4:
-                    Matrix[1, 0] = " O";
-                    break;
-                case 5:
-                    Matrix[1, 1] = " O";
-                    break;
-                case 6:
-                    Matrix[1, 2] = " O";
-                    break;
-                case 7:
-                    Matrix[2, 0] = " O";
-                    break;
-                case 8:
-                    Matrix[2, 1] = " O";
-                    break;
-                case 9:
-                    Matrix[2, 2] = " O";
-                    break;
-            }
-
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    Console.Write(Matrix[i, j] + "\t");
-                }
-                Console.WriteLine();
+                Console.WriteLine(); // перенос курсора после каждый сроки
             }
         }
+
+        /// <summary>
+        /// Просчет хода
+        /// </summary>
+        /// <param name="matrix"></param>
+        static void Turn(string[,] matrix)
+        {
+            Console.WriteLine("Your turn to chose position"); // запрос хода игрока
+            string inputPosition = Console.ReadLine(); // ввод позиции 
+            int z = int.Parse(inputPosition);
+
+            switch (z) // выбор позиции
+            {
+                case 1:
+                    EmptyCheck(matrix, 0, 0, " X");
+                    break;
+                case 2:
+                    EmptyCheck(matrix, 0, 1, " X");
+                    break;
+                case 3:
+                    EmptyCheck(matrix, 0, 2, " X");
+                    break;
+                case 4:
+                    EmptyCheck(matrix, 1, 0, " X");;
+                    break;
+                case 5:
+                    EmptyCheck(matrix, 1, 1, " X");;
+                    break;
+                case 6:
+                    EmptyCheck(matrix, 1, 2, " X");;
+                    break;
+                case 7:
+                    EmptyCheck(matrix, 2, 0, " X");;
+                    break;
+                case 8:
+                    EmptyCheck(matrix, 2, 1, " X");;
+                    break;
+                case 9:
+                    EmptyCheck(matrix, 2, 2, " X");;
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Проверка пустоты ячейки матрицы
+        /// </summary>
+        /// <param name="matrix"></param>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <param name="value"></param>
+        static void EmptyCheck(string[,] matrix, int a, int b, string value)
+        {
+            if (matrix[a, b] == "[ ]")
+            {
+                matrix[a, b] = value;
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("Клетка уже занята, выберите другую");
+                return false
+            }
+        }
+        
+        
     }
 }
