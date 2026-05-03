@@ -15,23 +15,14 @@
                 }
             }
             
+            // условия прекращения игры
+            do
+            {
+                Print(matrix);
+                Turn(matrix);
+            }
+            while VinCheck(matrix);
             
-            Print(matrix);
-            Turn(matrix);
-            Print(matrix);
-            Turn(matrix);
-            Print(matrix);
-            Turn(matrix);
-            Print(matrix);
-            Turn(matrix);
-            Print(matrix);
-            Turn(matrix);
-            Print(matrix);
-            Turn(matrix);
-            Print(matrix);
-            Turn(matrix);
-            Print(matrix);
-            Turn(matrix);
         }
 
         /// <summary>
@@ -121,26 +112,29 @@
             if (matrix[0, 0] == " X" && matrix[0, 1] == " X" && matrix[0, 2] == " X" ||
                 matrix[1, 0] == " X" && matrix[1, 1] == " X" && matrix[1, 2] == " X" ||
                 matrix[2, 0] == " X" && matrix[2, 1] == " X" && matrix[2, 2] == " X" ||
-                
+
                 matrix[0, 0] == " X" && matrix[1, 0] == " X" && matrix[2, 0] == " X" ||
                 matrix[0, 1] == " X" && matrix[1, 1] == " X" && matrix[2, 1] == " X" ||
                 matrix[0, 2] == " X" && matrix[1, 2] == " X" && matrix[2, 2] == " X" ||
-                
+
                 matrix[0, 0] == " X" && matrix[1, 1] == " X" && matrix[2, 2] == " X" ||
                 matrix[2, 0] == " X" && matrix[2, 1] == " X" && matrix[0, 2] == " X" ||)
                 Console.WriteLine("Первый игрок - победил");
             else if (matrix[0, 0] == " O" && matrix[0, 1] == " O" && matrix[0, 2] == " O" ||
-                  matrix[1, 0] == " O" && matrix[1, 1] == " O" && matrix[1, 2] == " O" ||
-                  matrix[2, 0] == " O" && matrix[2, 1] == " O" && matrix[2, 2] == " O" ||
-                
-                  matrix[0, 0] == " O" && matrix[1, 0] == " O" && matrix[2, 0] == " O" ||
-                  matrix[0, 1] == " O" && matrix[1, 1] == " O" && matrix[2, 1] == " O" ||
-                  matrix[0, 2] == " O" && matrix[1, 2] == " O" && matrix[2, 2] == " O" ||
-                
-                  matrix[0, 0] == " O" && matrix[1, 1] == " O" && matrix[2, 2] == " O" ||
-                  matrix[2, 0] == " O" && matrix[2, 1] == " O" && matrix[0, 2] == " O" ||)
+                     matrix[1, 0] == " O" && matrix[1, 1] == " O" && matrix[1, 2] == " O" ||
+                     matrix[2, 0] == " O" && matrix[2, 1] == " O" && matrix[2, 2] == " O" ||
+
+                     matrix[0, 0] == " O" && matrix[1, 0] == " O" && matrix[2, 0] == " O" ||
+                     matrix[0, 1] == " O" && matrix[1, 1] == " O" && matrix[2, 1] == " O" ||
+                     matrix[0, 2] == " O" && matrix[1, 2] == " O" && matrix[2, 2] == " O" ||
+
+                     matrix[0, 0] == " O" && matrix[1, 1] == " O" && matrix[2, 2] == " O" ||
+                     matrix[2, 0] == " O" && matrix[2, 1] == " O" && matrix[0, 2] == " O" ||)
             Console.WriteLine("Второй игрок - победил");
-            else Console.WriteLine("Ничья");
+            else if (matrix[0, 0] != "[ ]" && matrix[0, 1] != "[ ]" && matrix[0, 2] != "[ ]" &&
+                     matrix[1, 0] != "[ ]" && matrix[1, 1] != "[ ]" && matrix[1, 2] != "[ ]" &&
+                     matrix[2, 0] != "[ ]" && matrix[2, 1] != "[ ]" && matrix[2, 2] != "[ ]" &&)
+                Console.WriteLine("Ничья");
         }
         
     }
