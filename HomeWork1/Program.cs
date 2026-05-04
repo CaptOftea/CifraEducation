@@ -15,13 +15,25 @@
                 }
             }
             
-            // условия прекращения игры
+            Console.WriteLine();
+            Console.WriteLine("*** ДОБРО ПОЖАЛОВАТЬ В КРЕСТИКИ--НОЛИКИ ***");
+            Console.WriteLine("--------- ПРАВИЛА ---------");
+            Console.WriteLine("*** ДЛЯ ИГРЫ ИСПОЛЬЗУЙТЕ NUMPAD ***");
+            Console.WriteLine();
+            
+            // Тело игры
             do
             {
                 Print(matrix);
                 TurnX(matrix);
                 Print(matrix);
+
+                if (!VinCheck(matrix))
+                    break;
+                
                 TurnY(matrix);
+                if (!VinCheck(matrix))
+                    break;
             }
             while (VinCheck(matrix));
             
@@ -50,40 +62,47 @@
         /// <param name="matrix"></param>
         static void TurnX(string[,] matrix)
         {
-            Console.WriteLine("X-player chose position"); // запрос хода игрока
-            string inputPosition = Console.ReadLine(); // ввод позиции 
+            Console.WriteLine();
+            Console.WriteLine("Ходит 1 игрок"); // запрос хода игрока
+            string inputPosition = Console.ReadLine(); // ввод позиции
             int z = int.Parse(inputPosition);
-
+            
             switch (z) // выбор позиции
-            {
-                case 1:
-                    EmptyCheck(matrix, 2, 0, " X");
-                    break;
-                case 2:
-                    EmptyCheck(matrix, 2, 1, " X");
-                    break;
-                case 3:
-                    EmptyCheck(matrix, 2, 2, " X");
-                    break;
-                case 4:
-                    EmptyCheck(matrix, 1, 0, " X");;
-                    break;
-                case 5:
-                    EmptyCheck(matrix, 1, 1, " X");;
-                    break;
-                case 6:
-                    EmptyCheck(matrix, 1, 2, " X");;
-                    break;
-                case 7:
-                    EmptyCheck(matrix, 0, 0, " X");;
-                    break;
-                case 8:
-                    EmptyCheck(matrix, 0, 1, " X");;
-                    break;
-                case 9:
-                    EmptyCheck(matrix, 0, 2, " X");;
-                    break;
-            }
+                {
+                    case 1:
+                        EmptyCheck(matrix, 2, 0, " X");
+                        break;
+                    case 2:
+                        EmptyCheck(matrix, 2, 1, " X");
+                        break;
+                    case 3:
+                        EmptyCheck(matrix, 2, 2, " X");
+                        break;
+                    case 4:
+                        EmptyCheck(matrix, 1, 0, " X");
+                        ;
+                        break;
+                    case 5:
+                        EmptyCheck(matrix, 1, 1, " X");
+                        ;
+                        break;
+                    case 6:
+                        EmptyCheck(matrix, 1, 2, " X");
+                        ;
+                        break;
+                    case 7:
+                        EmptyCheck(matrix, 0, 0, " X");
+                        ;
+                        break;
+                    case 8:
+                        EmptyCheck(matrix, 0, 1, " X");
+                        ;
+                        break;
+                    case 9:
+                        EmptyCheck(matrix, 0, 2, " X");
+                        ;
+                        break;
+                }
         }
         
         /// <summary>
@@ -92,38 +111,39 @@
         /// <param name="matrix"></param>
         static void TurnY(string[,] matrix)
         {
-            Console.WriteLine("Y-player chose position"); // запрос хода игрока
+            Console.WriteLine();
+            Console.WriteLine("Ходит 2 игрок"); // запрос хода игрока
             string inputPosition = Console.ReadLine(); // ввод позиции 
             int z = int.Parse(inputPosition);
 
             switch (z) // выбор позиции
             {
                 case 1:
-                    EmptyCheck(matrix, 2, 0, " Y");
+                    EmptyCheck(matrix, 2, 0, " O");
                     break;
                 case 2:
-                    EmptyCheck(matrix, 2, 1, " Y");
+                    EmptyCheck(matrix, 2, 1, " O");
                     break;
                 case 3:
-                    EmptyCheck(matrix, 2, 2, " Y");
+                    EmptyCheck(matrix, 2, 2, " O");
                     break;
                 case 4:
-                    EmptyCheck(matrix, 1, 0, " Y");;
+                    EmptyCheck(matrix, 1, 0, " O");;
                     break;
                 case 5:
-                    EmptyCheck(matrix, 1, 1, " Y");;
+                    EmptyCheck(matrix, 1, 1, " O");;
                     break;
                 case 6:
-                    EmptyCheck(matrix, 1, 2, " Y");;
+                    EmptyCheck(matrix, 1, 2, " O");;
                     break;
                 case 7:
-                    EmptyCheck(matrix, 0, 0, " Y");;
+                    EmptyCheck(matrix, 0, 0, " O");;
                     break;
                 case 8:
-                    EmptyCheck(matrix, 0, 1, " Y");;
+                    EmptyCheck(matrix, 0, 1, " O");;
                     break;
                 case 9:
-                    EmptyCheck(matrix, 0, 2, " Y");;
+                    EmptyCheck(matrix, 0, 2, " O");;
                     break;
             }
         }
