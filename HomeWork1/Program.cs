@@ -28,14 +28,14 @@
                 TurnX(matrix);
                 Print(matrix);
 
-                if (!VinCheck(matrix))
+                if (!WinCheck(matrix))
                     break;
                 
                 TurnY(matrix);
-                if (!VinCheck(matrix))
+                if (!WinCheck(matrix))
                     break;
             }
-            while (VinCheck(matrix));
+            while (WinCheck(matrix));
             
         }
 
@@ -171,7 +171,7 @@
         /// Проверка условия победы
         /// </summary>
         /// <param name="matrix"></param>
-        static bool VinCheck(string[,] matrix)
+        static bool WinCheck(string[,] matrix)
         {
             if (matrix[0, 0] == " X" && matrix[0, 1] == " X" && matrix[0, 2] == " X" ||
                 matrix[1, 0] == " X" && matrix[1, 1] == " X" && matrix[1, 2] == " X" ||
