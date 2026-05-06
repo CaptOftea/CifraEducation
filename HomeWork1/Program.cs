@@ -15,6 +15,9 @@
                 }
             }
             
+            const string FirstPlayer = " X"; 
+            const string SecondPlayer = " O";
+            
             Console.WriteLine();
             Console.WriteLine("*** ДОБРО ПОЖАЛОВАТЬ В КРЕСТИКИ--НОЛИКИ ***");
             Console.WriteLine("--------- ПРАВИЛА ---------");
@@ -25,18 +28,15 @@
             do
             {
                 Print(matrix);
-                TurnX(matrix);
-                Print(matrix);
+                Turn(matrix,FirstPlayer,"Игрок №1");
 
                 if (!WinCheck(matrix))
                     break;
                 
-                TurnY(matrix);
-                if (!WinCheck(matrix))
-                    break;
+                Print(matrix);
+                Turn(matrix,SecondPlayer,"Игрок №2");
             }
             while (WinCheck(matrix));
-            
         }
 
         /// <summary>
@@ -57,97 +57,50 @@
         }
 
         /// <summary>
-        /// Просчет хода X
+        /// Просчет хода
         /// </summary>
         /// <param name="matrix"></param>
-        static void TurnX(string[,] matrix)
+        static void Turn(string[,] matrix, string player, string playerNo)
         {
             Console.WriteLine();
-            Console.WriteLine("Ходит 1 игрок"); // запрос хода игрока
+            Console.WriteLine("Ходит {0}", playerNo); // запрос хода игрока
             string inputPosition = Console.ReadLine(); // ввод позиции
             int z = int.Parse(inputPosition);
             
             switch (z) // выбор позиции
                 {
                     case 1:
-                        EmptyCheck(matrix, 2, 0, " X");
+                        EmptyCheck(matrix, 2, 0, player);
                         break;
                     case 2:
-                        EmptyCheck(matrix, 2, 1, " X");
+                        EmptyCheck(matrix, 2, 1, player);
                         break;
                     case 3:
-                        EmptyCheck(matrix, 2, 2, " X");
+                        EmptyCheck(matrix, 2, 2, player);
                         break;
                     case 4:
-                        EmptyCheck(matrix, 1, 0, " X");
-                        ;
+                        EmptyCheck(matrix, 1, 0, player);
                         break;
                     case 5:
-                        EmptyCheck(matrix, 1, 1, " X");
-                        ;
+                        EmptyCheck(matrix, 1, 1, player);
                         break;
                     case 6:
-                        EmptyCheck(matrix, 1, 2, " X");
-                        ;
+                        EmptyCheck(matrix, 1, 2, player);
                         break;
                     case 7:
-                        EmptyCheck(matrix, 0, 0, " X");
-                        ;
+                        EmptyCheck(matrix, 0, 0, player);
                         break;
                     case 8:
-                        EmptyCheck(matrix, 0, 1, " X");
-                        ;
+                        EmptyCheck(matrix, 0, 1, player);
                         break;
                     case 9:
-                        EmptyCheck(matrix, 0, 2, " X");
-                        ;
+                        EmptyCheck(matrix, 0, 2, player);
                         break;
                 }
+                
+            
         }
         
-        /// <summary>
-        /// Просчет хода Y
-        /// </summary>
-        /// <param name="matrix"></param>
-        static void TurnY(string[,] matrix)
-        {
-            Console.WriteLine();
-            Console.WriteLine("Ходит 2 игрок"); // запрос хода игрока
-            string inputPosition = Console.ReadLine(); // ввод позиции 
-            int z = int.Parse(inputPosition);
-
-            switch (z) // выбор позиции
-            {
-                case 1:
-                    EmptyCheck(matrix, 2, 0, " O");
-                    break;
-                case 2:
-                    EmptyCheck(matrix, 2, 1, " O");
-                    break;
-                case 3:
-                    EmptyCheck(matrix, 2, 2, " O");
-                    break;
-                case 4:
-                    EmptyCheck(matrix, 1, 0, " O");;
-                    break;
-                case 5:
-                    EmptyCheck(matrix, 1, 1, " O");;
-                    break;
-                case 6:
-                    EmptyCheck(matrix, 1, 2, " O");;
-                    break;
-                case 7:
-                    EmptyCheck(matrix, 0, 0, " O");;
-                    break;
-                case 8:
-                    EmptyCheck(matrix, 0, 1, " O");;
-                    break;
-                case 9:
-                    EmptyCheck(matrix, 0, 2, " O");;
-                    break;
-            }
-        }
-
         /// <summary>
         /// Проверка пустоты ячейки матрицы
         /// </summary>
@@ -184,6 +137,7 @@
                 matrix[0, 0] == " X" && matrix[1, 1] == " X" && matrix[2, 2] == " X" ||
                 matrix[2, 0] == " X" && matrix[2, 1] == " X" && matrix[0, 2] == " X")
             {
+                Print(matrix);
                 Console.WriteLine("Игрок 1 победил!");
                 Console.ReadLine();
                 return false;
@@ -199,6 +153,7 @@
                      matrix[0, 0] == " O" && matrix[1, 1] == " O" && matrix[2, 2] == " O" ||
                      matrix[2, 0] == " O" && matrix[2, 1] == " O" && matrix[0, 2] == " O")
             {
+                Print(matrix);
                 Console.WriteLine("Игрок 2 победил!");
                 Console.ReadLine();
                 return false;
@@ -207,6 +162,7 @@
                      matrix[1, 0] != "[ ]" && matrix[1, 1] != "[ ]" && matrix[1, 2] != "[ ]" &&
                      matrix[2, 0] != "[ ]" && matrix[2, 1] != "[ ]" && matrix[2, 2] != "[ ]")
             {
+                Print(matrix);
                 Console.WriteLine("Ничья!");
                 Console.ReadLine();
                 return false;
