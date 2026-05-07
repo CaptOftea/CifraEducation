@@ -27,14 +27,13 @@
             // Тело игры
             do
             {
-                Print(matrix);
-                Turn(matrix,FirstPlayer,"Игрок №1");
-
-                if (!WinCheck(matrix))
-                    break;
-                
-                Print(matrix);
-                Turn(matrix,SecondPlayer,"Игрок №2");
+                for (int count = 0; count < 2; count++)
+                {
+                    Print(matrix);
+                    Turn(matrix, count == 0 ? FirstPlayer : SecondPlayer, count == 0 ? "Игрок №1" : "Игрок №2");
+                    if (count == 0 && !WinCheck(matrix))
+                        break;
+                }
             }
             while (WinCheck(matrix));
         }
