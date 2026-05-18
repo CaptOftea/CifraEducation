@@ -1,4 +1,8 @@
-﻿namespace PhoneBook;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+
+namespace PhoneBook;
 
 /// <summary>
 /// Основаная логика
@@ -7,7 +11,7 @@ class Program
 {
     static void Main()
     {
-        HUD.MainMenu();
+        PhoneBook.MainMenu();
             
         Create();
         SaveToFile();
@@ -95,7 +99,7 @@ public class Singleton // объявление класса, который га
         }
 }
 
-public class HUD
+public class PhoneBook
 {
     public static void MainMenu()
     {
@@ -143,7 +147,7 @@ public class Manager
     private static List<(string Name,int Number)> subscribers; // список как поле класса
 
     /// <summary>
-    /// Создние листа, но пустого
+    /// Создние пустого листа
     /// </summary>
     public static void CreateData()
     {
@@ -187,4 +191,57 @@ public class Manager
         int oldNumber = subscribers[index].Number; subscribers[index].Number = newNumber;
         
     }
+    
+}
+
+public class Storage
+{
+    private string filePath;
+
+    // Конструктор для принятия путя файла
+    public StorageData(string filePath)
+    {
+        this.filePath = filePath;
+    }
+
+    // Сохранение листа в файл
+    public void StorageSave(List<Abonent> subscribers)
+    {
+        using (StreamWriter writer = new StreamWriter(filePath))
+        {
+            foreach (Abonent abonent in subscribers)
+            {
+                writer.WriteLine(abonent.Name, abonent.Number);
+            }
+        }
+
+        Console.WriteLine("Список абонентов успешно сохранен в файл.")
+    }
+
+    // Загрузка листа из файлы
+    public List<Abonent> StorageLoad()
+    {
+        List<Abonent> loadedList = new List<Abonent>(); //создание пустого списка объектов типа Abonent
+        {
+            using (StreamReader reader = new StreamReader(filePath)) // создание нового объекта для чтения из файла
+            {
+                string line; //временное хранение строчек файла
+                while ((line = reader.ReadLine()) != null) 
+                {
+                    string[] parts = line.Split(',');
+                    if (parts.Length == 2)
+                    {
+                        string name = parts[0];
+                        int number = int.Parse(parts[1]);
+                        Abonent abonent = new Abonent(name, number);
+                        loadedList.Add(abonent);
+                    }
+                }
+            }
+
+            Console.WriteLine("Список абонентов успешно загружен из файлы.");
+        }
+        return loadedList;
+    }
+
 }
