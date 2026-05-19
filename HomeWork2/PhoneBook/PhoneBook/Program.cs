@@ -11,94 +11,21 @@ class Program
 {
     static void Main()
     {
+        
+        // создание пустого листа
+        var phoneBook = Manager.CreateData();
+        
+        // сохраняем лист в файл
+        StorageData storage = new StorageData("book.txt"); // сохранение в виртуальной памяти
+        storage.StorageSave(phoneBook); // сохранение в памяти физической
+        
         PhoneBook.MainMenu();
-            
-        Create();
-        SaveToFile();
-    }
-
-    /// <summary>
-    /// Прием номера и имя телефона от пользователя.
-    /// </summary>
-    static void Create()
-    {
-        Console.WriteLine("Впишите имя абонента");
-        string name = Console.ReadLine();
-        
-        Console.WriteLine("Впишите номер абонента");
-        int number = int.Parse(Console.ReadLine());
-        
-        Abonent abonent = new Abonent(name, number);
-        Console.WriteLine("Имя : {0}, Номер: {1}", abonent.Name, abonent.Number);
-        
-    }
-
-    /// <summary>
-    /// Создает и записывает текстовый файл
-    /// </summary>
-    /// <param name="???"></param>
-    public void SaveToFile(List<Abonent> abonents, string filePath)
-    {
-        File.WriteAllText(filePath, abonents.ToString());
-    }
-    
-    /// <summary>
-    /// Считывание из файлы сохранённые номера.
-    /// </summary>
-    static void Read()
-    {
-        
-    }
-    
-    /// <summary>
-    /// Обновление данный в файле.
-    /// </summary>
-    static void Update()
-    {
-        
-    }
-    
-    /// <summary>
-    /// Удалить данные в файле.
-    /// </summary>
-    static void Delete()
-    {
-        
     }
 }
 
 /// <summary>
-/// Данные об абоненте.
+/// HUD
 /// </summary>
-public class Abonent
-{
-    public string Name; // Объявление полей
-    public int Number;
-    public Abonent(string name, int number) // Создание конструктора для заполнения данных
-    {
-        Name = name;
-        Number = number;
-    }
-}
-
-/// <summary>
-/// Паттерн одиночка.
-/// </summary>
-public class Singleton // объявление класса, который гарантирует, что есть только один экземпляр
-{
-        private static Singleton dBase; //снаружи не изменить
-
-        private Singleton() //конструктор, запрещающий создавать объекты извне и ед. способ олучить объект, через стат. метод
-        { }
-
-        public static Singleton getDBase() //возвращает ед. экземпляр и вызывает на объекте Singleton.getInstance()
-        {
-            if (dBase == null) //проверка создан ли уже объект
-                dBase == new Singleton(); // создает единственный экземпляр
-            return dBase; //возвращает единственный экземпляр
-        }
-}
-
 public class PhoneBook
 {
     public static void MainMenu()
@@ -121,7 +48,8 @@ public class PhoneBook
         switch (z)
         {
             case 1:
-                Manager.ShowData();
+                List<Abonent> loadedList = StorageData.StorageLoad("book.txt");
+                Manager.ShowData(loadedList);
                 break;
             case 2:
                 ;
@@ -140,40 +68,44 @@ public class PhoneBook
 }
 
 /// <summary>
-/// Класс работы со списком
+/// Работа с листом
 /// </summary>
 public class Manager
 {
-    private static List<(string Name,int Number)> subscribers; // список как поле класса
-
+    private static List<Abonent> subscribers; // список как поле класса
+    
     /// <summary>
     /// Создние пустого листа
     /// </summary>
-    public static void CreateData()
+    public static  List<Abonent> CreateData()
     {
-        
-        subscribers = new List<(Abonent)>();
+        if (subscribers == null) //проверка создан ли уже объект
+            subscribers = new List<Abonent>(); // создает единственный экземпляр
+        return subscribers; //возвращает единственный экземпляр
     }
     
     /// <summary>
     /// Добавить эллемент в лист.
     /// </summary>
     /// <param name="???"></param>
-    public static void AddData(Abonent) 
+    public static void AddData() 
     {
         Console.WriteLine("Введите имя абонента: ");
         string name = Console.ReadLine();
         Console.WriteLine("Введите номер абонента: ");
         int number = int.Parse(Console.ReadLine());
         Abonent newAbonent = new Abonent(name, number);
-        subscribers.Add((Abonent)); 
+        subscribers.Add(newAbonent); 
     }
 
-    public static void ShowData()
+    /// <summary>
+    /// Вывести лист
+    /// </summary>
+    public static void ShowData(List<Abonent> abonents)
     {
-        foreach (var sub in subscribers)
+        foreach (var sub in abonents)
         {
-            Console.WriteLine("{0}, {1}",{sub.Name}, {sub.Number});
+            Console.WriteLine("{0}, {1}",sub.Name, sub.Number);
         }
     }
 
@@ -182,19 +114,35 @@ public class Manager
         subscribers.RemoveAt(subscribers.Count - 1);
     }
 
-    public static void ChangeData(int index, string newName, int newNumber)
+    /// <summary>
+    /// Сменить информацию абонента
+    /// </summary>
+    /// <param name="newName"></param>
+    /// <param name="newNumber"></param>
+    public static void ChangeData( string newName, int newNumber)
     {
         Console.WriteLine("Какой контакт вы хотите изменить?");
-        int index  = int.Parse(Console.ReadLine());
-        
-        string oldName = subscribers[index].Name; subscribers[index].Name = newName;
-        int oldNumber = subscribers[index].Number; subscribers[index].Number = newNumber;
-        
+        int index = int.Parse(Console.ReadLine());
+
+        if (index >= 0 && index < subscribers.Count)
+        {
+            string oldName = subscribers[index].Name; subscribers[index].Name = newName;
+            int oldNumber = subscribers[index].Number; subscribers[index].Number = newNumber;
+            
+            Console.WriteLine("Контакт изменен: {0} ({1}) -> {2} ({3})", oldName, oldNumber, newName, newNumber);
+        }
+        else
+        {
+            Console.WriteLine("Ошибка: контект не найден!");
+        }
+
     }
     
 }
 
-public class Storage
+
+//Работа с txt
+public class StorageData
 {
     private string filePath;
 
@@ -203,23 +151,29 @@ public class Storage
     {
         this.filePath = filePath;
     }
-
-    // Сохранение листа в файл
+    
+    /// <summary>
+    /// Сохранение листа в файл
+    /// </summary>
+    /// <param name="subscribers"></param>
     public void StorageSave(List<Abonent> subscribers)
     {
         using (StreamWriter writer = new StreamWriter(filePath))
         {
             foreach (Abonent abonent in subscribers)
             {
-                writer.WriteLine(abonent.Name, abonent.Number);
+                writer.WriteLine("{0},{1}",abonent.Name, abonent.Number);
             }
         }
 
-        Console.WriteLine("Список абонентов успешно сохранен в файл.")
+        Console.WriteLine("Список абонентов успешно сохранен в файл.");
     }
 
-    // Загрузка листа из файлы
-    public List<Abonent> StorageLoad()
+    /// <summary>
+    /// Загрузка листа из файла
+    /// </summary>
+    /// <returns></returns>
+    public static List<Abonent> StorageLoad(string filePath)
     {
         List<Abonent> loadedList = new List<Abonent>(); //создание пустого списка объектов типа Abonent
         {
@@ -244,4 +198,19 @@ public class Storage
         return loadedList;
     }
 
+}
+
+/// <summary>
+/// Данные об абоненте.
+/// </summary>
+public class Abonent
+{
+    public string Name; // Объявление полей
+    public int Number;
+    
+    public Abonent(string name, int number) // Создание конструктора для заполнения данных
+    {
+        Name = name;
+        Number = number;
+    }
 }
