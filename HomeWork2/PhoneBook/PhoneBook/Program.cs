@@ -52,13 +52,13 @@ public class PhoneBook
                 Manager.ShowData(loadedList);
                 break;
             case 2:
-                ;
+                Manager.Search();
                 break;
             case 3:
                 Manager.AddData();
                 break;
             case 4:
-                ;
+                Manager.ChangeData();
                 break;
             case 5:
                 Manager.RemoveData();
@@ -137,11 +137,75 @@ public class Manager
         }
 
     }
-    
+
+    /// <summary>
+    /// Поиск контакта
+    /// </summary>
+    public static void Search()
+    {
+        Console.WriteLine("Выберите по какому параметру искать: 1. по имени 2. по номеру");
+        
+        string SearchElement = Console.ReadLine();
+        switch(SearchElement) 
+        {
+            case 1:
+                Console.WriteLine("Впишите имя для поиска");
+                string SearchName = Console.ReadLine();
+                FindByName(SearchName);
+                break;
+            
+            case 2:
+                Console.WriteLine("Впишите номер для поиска");
+                string SearchNumber = Console.ReadLine();
+                FindByNumber(SearchNumber);
+                break;
+        }
+    }
+
+    public static void FindByName(string name)
+    {
+        bool found = false; // лог. переменная нашел/не нашел
+        
+        for (int i = 0; i < subscribers.Count; i++) // счетчик i, пока меньше кол-ва элементов, выполняет тело цикла, после чего прибавляет 1
+        {
+            if (subscribers[i].Name.Equals(name, StringComparison.OrdinalIgnoreCase)) //Обращаемся к полю Name класса Abonent через subcribers[i]
+            {
+                Console.WriteLine("Найден контакт #{i}:{subscribers[i].Name},{subscribers[i].Number}");
+                found = true;
+            }
+        }
+
+        if (!found)
+        {
+            Console.WriteLine("Абонент с именем: {1} не найден", name);
+        }
+    }
+
+    public static void FindByNumber(int number)
+    {
+        bool found = false;
+
+        for (int i = 0; i < subscribers.Count; i++)
+        {
+            if (subscribers[i].Number == number) //обращение к полю Number класса Abonent через subscribers[i]
+            {
+                Console.WriteLine("Найден контакт #{i}: {subscribers[i].Name}, {subscribers[i].Number}");
+                found = true;
+            }
+        }
+
+        if (!found)
+        {
+            Console.WriteLine("Абонент с номером {0} не найден.", number);
+        }
+    }
+
 }
 
 
-//Работа с txt
+/// <summary>
+/// Работа с txt
+/// </summary>
 public class StorageData
 {
     private string filePath;
