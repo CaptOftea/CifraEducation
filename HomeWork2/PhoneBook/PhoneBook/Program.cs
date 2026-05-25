@@ -30,6 +30,21 @@ public class PhoneBook
 {
     public static void MainMenu()
     {
+        
+    
+        if (Manager.subscribers == null )
+        {
+            if (File.Exists("book.txt"))
+            {
+                var loadedList = StorageData.StorageLoad("book.txt");
+                Manager.SetData(loadedList);
+            }
+            else
+            {
+                Manager.CreateData();
+            }
+        }
+    
         Console.WriteLine("Добро пожаловать в ваши контакты");
         Console.WriteLine("Что вы хотите сделать?");
         
@@ -39,8 +54,6 @@ public class PhoneBook
         Console.WriteLine("4. Изменить контакт");
         Console.WriteLine("5. Удалить контакт");
         
-        Manager.CreateData();
-        
         string inputPosition = Console.ReadLine();
         int z = int.Parse(inputPosition);
 
@@ -48,7 +61,8 @@ public class PhoneBook
         switch (z)
         {
             case 1:
-                List<Abonent> loadedList = StorageData.StorageLoad("book.txt");
+                var loadedList = StorageData.StorageLoad("book.txt");
+                Manager.SetData(loadedList);
                 Manager.ShowData(loadedList);
                 break;
             case 2:
@@ -72,7 +86,7 @@ public class PhoneBook
 /// </summary>
 public class Manager
 {
-    private static List<Abonent> subscribers; // список как поле класса
+    public static List<Abonent> subscribers; // список как поле класса
     
     /// <summary>
     /// Создние пустого листа
@@ -90,12 +104,23 @@ public class Manager
     /// <param name="???"></param>
     public static void AddData() 
     {
+        if (subscribers == null)
+        {
+            subscribers = new List<Abonent>();
+        }
+        
         Console.WriteLine("Введите имя абонента: ");
         string name = Console.ReadLine();
         Console.WriteLine("Введите номер абонента: ");
-        int number = int.Parse(Console.ReadLine());
+        long number = long.Parse(Console.ReadLine());
+        
         Abonent newAbonent = new Abonent(name, number);
         subscribers.Add(newAbonent); 
+        
+        StorageData storage = new StorageData("book.txt");
+        storage.StorageSave((subscribers));
+        
+        Console.WriteLine($"Контакт {name} добавлен!");
     }
 
     /// <summary>
@@ -111,7 +136,17 @@ public class Manager
 
     public static void RemoveData()
     {
-        subscribers.RemoveAt(subscribers.Count - 1);
+        Console.WriteLine("Введите номер контакта для удаления (от 0 до {0}):", subscribers.Count-1);
+        if (int.TryParse(Console.ReadLine(), out int index) && index >= 0 && index < subscribers.Count)
+        {
+            var removed = subscribers[index];
+            subscribers.RemoveAt(index);
+            Console.WriteLine($"Контакт {removed.Name} удален");
+        }
+        else
+        {
+            Console.WriteLine("Неверный индекс!");
+        }
     }
 
     /// <summary>
@@ -119,15 +154,20 @@ public class Manager
     /// </summary>
     /// <param name="newName"></param>
     /// <param name="newNumber"></param>
-    public static void ChangeData( string newName, int newNumber)
+    public static void ChangeData()
     {
         Console.WriteLine("Какой контакт вы хотите изменить?");
         int index = int.Parse(Console.ReadLine());
 
         if (index >= 0 && index < subscribers.Count)
         {
+            Console.WriteLine("Введите новое имя: ");
+            string newName = Console.ReadLine();
+            Console.WriteLine("Введите новый номер: ");
+            int  newNumber = int.Parse(Console.ReadLine());
+            
             string oldName = subscribers[index].Name; subscribers[index].Name = newName;
-            int oldNumber = subscribers[index].Number; subscribers[index].Number = newNumber;
+            long oldNumber = subscribers[index].Number; subscribers[index].Number = newNumber;
             
             Console.WriteLine("Контакт изменен: {0} ({1}) -> {2} ({3})", oldName, oldNumber, newName, newNumber);
         }
@@ -145,7 +185,7 @@ public class Manager
     {
         Console.WriteLine("Выберите по какому параметру искать: 1. по имени 2. по номеру");
         
-        string SearchElement = Console.ReadLine();
+        int SearchElement = int.Parse(Console.ReadLine());
         switch(SearchElement) 
         {
             case 1:
@@ -156,7 +196,7 @@ public class Manager
             
             case 2:
                 Console.WriteLine("Впишите номер для поиска");
-                string SearchNumber = Console.ReadLine();
+                int SearchNumber = int.Parse(Console.ReadLine());
                 FindByNumber(SearchNumber);
                 break;
         }
@@ -170,14 +210,14 @@ public class Manager
         {
             if (subscribers[i].Name.Equals(name, StringComparison.OrdinalIgnoreCase)) //Обращаемся к полю Name класса Abonent через subcribers[i]
             {
-                Console.WriteLine("Найден контакт #{i}:{subscribers[i].Name},{subscribers[i].Number}");
+                Console.WriteLine($"Найден контакт #{i}:{subscribers[i].Name},{subscribers[i].Number}");
                 found = true;
             }
         }
 
         if (!found)
         {
-            Console.WriteLine("Абонент с именем: {1} не найден", name);
+            Console.WriteLine("Абонент с именем: {0} не найден", name);
         }
     }
 
@@ -198,6 +238,15 @@ public class Manager
         {
             Console.WriteLine("Абонент с номером {0} не найден.", number);
         }
+    }
+
+    /// <summary>
+    /// Обновление статического поля subscribers
+    /// </summary>
+    /// <param name="data"></param>
+    public static void SetData(List<Abonent> data)
+    {
+        subscribers = data;
     }
 
 }
@@ -240,7 +289,7 @@ public class StorageData
     public static List<Abonent> StorageLoad(string filePath)
     {
         List<Abonent> loadedList = new List<Abonent>(); //создание пустого списка объектов типа Abonent
-        {
+        
             using (StreamReader reader = new StreamReader(filePath)) // создание нового объекта для чтения из файла
             {
                 string line; //временное хранение строчек файла
@@ -256,9 +305,8 @@ public class StorageData
                     }
                 }
             }
-
-            Console.WriteLine("Список абонентов успешно загружен из файлы.");
-        }
+            
+        Console.WriteLine("Список абонентов успешно загружен из файлы.");
         return loadedList;
     }
 
@@ -270,9 +318,9 @@ public class StorageData
 public class Abonent
 {
     public string Name; // Объявление полей
-    public int Number;
+    public long Number;
     
-    public Abonent(string name, int number) // Создание конструктора для заполнения данных
+    public Abonent(string name, long number) // Создание конструктора для заполнения данных
     {
         Name = name;
         Number = number;
