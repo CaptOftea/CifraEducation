@@ -12,79 +12,77 @@ class Program
     static void Main()
     {
         
-        // создание пустого листа
-        var phoneBook = Manager.CreateData();
-        
-        // сохраняем лист в файл
-        StorageData storage = new StorageData("book.txt"); // сохранение в виртуальной памяти
-        storage.StorageSave(phoneBook); // сохранение в памяти физической
-        
-        PhoneBook.MainMenu();
-    }
-}
-
-/// <summary>
-/// HUD
-/// </summary>
-public class PhoneBook
-{
-    public static void MainMenu()
-    {
-        
-    
-        if (Manager.subscribers == null )
+        if (Phonebook.subscribers == null)
         {
-            if (File.Exists("book.txt"))
+            if (File.Exists(FileConst.dataFile))
             {
-                var loadedList = StorageData.StorageLoad("book.txt");
-                Manager.SetData(loadedList);
+                var loadedList = StorageData.StorageLoad(FileConst.dataFile);
+                Phonebook.SetData(loadedList);
             }
             else
             {
-                Manager.CreateData();
+                Phonebook.CreateData();
             }
         }
-    
-        Console.WriteLine("Добро пожаловать в ваши контакты");
-        Console.WriteLine("Что вы хотите сделать?");
-        
-        Console.WriteLine("1. Посмотреть все контакты");
-        Console.WriteLine("2. Поиск");
-        Console.WriteLine("3. Добавить контакт");
-        Console.WriteLine("4. Изменить контакт");
-        Console.WriteLine("5. Удалить контакт");
-        
-        string inputPosition = Console.ReadLine();
-        int z = int.Parse(inputPosition);
 
-        //Это все пока наметки, потом побольше разберусь
-        switch (z)
+        while (true)
         {
-            case 1:
-                var loadedList = StorageData.StorageLoad("book.txt");
-                Manager.SetData(loadedList);
-                Manager.ShowData(loadedList);
-                break;
-            case 2:
-                Manager.Search();
-                break;
-            case 3:
-                Manager.AddData();
-                break;
-            case 4:
-                Manager.ChangeData();
-                break;
-            case 5:
-                Manager.RemoveData();
-                break;
+            Console.WriteLine("Добро пожаловать в ваши контакты");
+            Console.WriteLine("Что вы хотите сделать?");
+
+            Console.WriteLine("1. Посмотреть все контакты");
+            Console.WriteLine("2. Поиск");
+            Console.WriteLine("3. Добавить контакт");
+            Console.WriteLine("4. Изменить контакт");
+            Console.WriteLine("5. Удалить контакт");
+
+            string inputPosition = Console.ReadLine();
+            if (!int.TryParse(inputPosition, out int z))
+            {
+                Console.WriteLine("Ошибка: введите число");
+                continue;
+            }
+            
+            switch (z)
+            {
+                case 1:
+                    Phonebook.ShowData(Phonebook.subscribers);
+                    break;
+                case 2:
+                    Phonebook.Search();
+                    break;
+                case 3:
+                    Phonebook.AddData();
+                    SavetoFile();
+                    break;
+                case 4:
+                    Phonebook.ChangeData();
+                    SavetoFile();
+                    break;
+                case 5:
+                    Phonebook.RemoveData();
+                    SavetoFile();
+                    break;
+                default:
+                    Console.WriteLine("Ошибка: Выбери число из представленных!");
+                    break;
+            }
         }
     }
-}
 
+    /// <summary>
+    /// Метод для сохранения
+    /// </summary>
+    static void SavetoFile()
+    {
+        StorageData storage = new StorageData(FileConst.dataFile);
+        storage.StorageSave(Phonebook.subscribers);
+    }
+}
 /// <summary>
 /// Работа с листом
 /// </summary>
-public class Manager
+public class Phonebook
 {
     public static List<Abonent> subscribers; // список как поле класса
     
@@ -117,8 +115,8 @@ public class Manager
         Abonent newAbonent = new Abonent(name, number);
         subscribers.Add(newAbonent); 
         
-        StorageData storage = new StorageData("book.txt");
-        storage.StorageSave((subscribers));
+        StorageData storage = new StorageData(FileConst.dataFile);
+        storage.StorageSave(subscribers);
         
         Console.WriteLine($"Контакт {name} добавлен!");
     }
@@ -325,4 +323,12 @@ public class Abonent
         Name = name;
         Number = number;
     }
+}
+
+/// <summary>
+/// Публичная константа
+/// </summary>
+public static class FileConst
+{
+    public const string dataFile = "book.txt";
 }
